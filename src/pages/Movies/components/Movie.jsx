@@ -29,11 +29,11 @@ const Movie = ({ movie }) => {
   return (
     <>
       <div className=" bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 w-[100%]">
-        <div className="aspect-w-2 aspect-h-3">
+        <div className="relative w-full h-0" style={{ paddingBottom: "150%" }}>
           <img
             src={movie.Poster}
-            alt="Poster"
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full"
+            alt={movie.Title}
           />
         </div>
         <div className="p-4">
