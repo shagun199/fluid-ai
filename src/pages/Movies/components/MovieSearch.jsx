@@ -9,11 +9,11 @@ const MovieSearch = () => {
   };
 
   return (
-    <div class="flex px-4 py-3 rounded-md border-2 overflow-hidden max-w-md mx-auto">
+    <div className="flex px-4 py-3 rounded-md border-2 overflow-hidden max-w-md mx-auto">
       <input
         type="email"
         placeholder="Search Movie..."
-        class="w-full outline-none bg-transparent text-gray-600 text-sm"
+        className="w-full outline-none bg-transparent text-gray-600 text-sm"
         value={searchInput}
         onChange={searchInputChange}
       />

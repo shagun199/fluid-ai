@@ -1,26 +1,44 @@
 import React, { useState } from "react";
 import MovieDetails from "./MovieDetails";
+import { fetchMovie } from "../../../services/moviesService";
+import { useLoading } from "../../../context/LoadingContext";
 
 const Movie = ({ movie }) => {
+  const { setLoading } = useLoading();
   const [toogleModal, setToogleModal] = useState(false);
-  
-  const titleClick = () => {
-	setToogleModal(true)
-  }
-  
+  const [movieDetails, setMovieDetails] = useState({});
+
+  const titleClick = async (movieId) => {
+    try {
+      setLoading(true);
+      const response = await fetchMovie(movieId);
+
+      if (response.status !== 200) {
+        throw new Error("Unable to retrieve data at the moment");
+      }
+
+      setMovieDetails(response.data);
+      setToogleModal(true);
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className=" bg-white shadow-lg rounded-lg overflow-hidden border border-gray-200 w-[100%]">
-        <div className="relative w-full h-0" style={{ paddingBottom: "150%" }}>
+        <div className="aspect-w-2 aspect-h-3">
           <img
             src={movie.Poster}
-            className="absolute inset-0 w-full h-full"
-            alt={movie.Title}
+            alt="Poster"
+            className="w-full h-full object-cover"
           />
         </div>
         <div className="p-4">
           <div
-		  	onClick={titleClick}
+            onClick={() => titleClick(movie.imdbID)}
             className="text-lg font-semibold text-gray-800 cursor-pointer lg:truncate"
             title={movie.Title}
           >
@@ -29,7 +47,12 @@ const Movie = ({ movie }) => {
           <p className="text-sm text-gray-600">Released: {movie.Year}</p>
         </div>
       </div>
-      {toogleModal && <MovieDetails setToogleModal={setToogleModal} />}
+      {toogleModal && (
+        <MovieDetails
+          setToogleModal={setToogleModal}
+          movieDetails={movieDetails}
+        />
+      )}
     </>
   );
 };

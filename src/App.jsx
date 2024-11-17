@@ -1,11 +1,16 @@
 import "./App.css";
+import Loader from "./components/Loader";
+import { useLoading } from "./context/LoadingContext";
 import Movies from "./pages/Movies/Movies";
 
 function App() {
+  const { loading } = useLoading();
+
   return (
-    <div className="text-2xl">
+    <>
+      {loading && <Loader />}
       <Movies />
-    </div>
+    </>
   );
 }
 
