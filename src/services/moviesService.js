@@ -1,8 +1,8 @@
 import axiosInstance from "../interceptors/axiosInterceptor";
 
-export const fetchMovies = async (title) => {
+export const fetchMovies = async (params) => {
   return await axiosInstance.get("/", {
-    params: { s: title },
+    params: { ...params },
   });
   return;
 };

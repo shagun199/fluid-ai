@@ -17,11 +17,19 @@ const MovieDetails = ({ setToogleModal, movieDetails }) => {
         </div>
 
         <div className="mt-6 flex flex-col sm:flex-row sm:gap-4">
-          <img
-            src={movieDetails.Poster}
-            alt={movieDetails.Title}
-            className="w-full rounded-lg mb-6"
-          />
+          <div>
+            <img
+              src={movieDetails.Poster}
+              alt={movieDetails.Title}
+              className="w-full rounded-lg mb-6"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "";
+                e.target.parentElement.innerHTML =
+                  "<div>Poster image not found</div>";
+              }}
+            />
+          </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3">
             <p className={commonParagraphCSS}>

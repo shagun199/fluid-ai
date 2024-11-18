@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import debounce from "debounce";
+import React, { useCallback, useState } from "react";
 import Search from "../../../assets/search.svg";
 
-const MovieSearch = () => {
+const MovieSearch = ({ getMovies }) => {
   const [searchInput, setSearchInput] = useState("");
 
+  const debouncedGetMovies = useCallback(
+    debounce((title) => {
+      getMovies({ s: title });
+    }, 300),
+    []
+  );
+
   const searchInputChange = (e) => {
-    setSearchInput(e.target.value);
+    const searchInput = e.target.value;
+    setSearchInput(searchInput);
+    if (searchInput.length > 3) {
+      debouncedGetMovies(searchInput.toLowerCase());
+    } else if (searchInput.length == 0) {
+      getMovies({ s: "popular" });
+    }
   };
 
   return (

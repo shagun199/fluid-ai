@@ -34,6 +34,12 @@ const Movie = ({ movie }) => {
             src={movie.Poster}
             className="absolute inset-0 w-full h-full"
             alt={movie.Title}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "";
+              e.target.parentElement.innerHTML =
+                '<div>Poster image not found</div>';
+            }}
           />
         </div>
         <div className="p-4">
